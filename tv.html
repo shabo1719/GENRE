@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<style>
+	html, section, body, h1, h2, p, footer, nav{margin: 0; padding: 0;
+	}
+@font-face {
+    font-family: 'NeoDonggeunmo';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/NeoDunggeunmo.woff') format('woff');
+    font-weight: normal;
+    font-display: swap;
+}
+html{
+  font-family:'NeoDonggeunmo';
+  font-optical-sizing:auto;
+  font-weight:100;
+  font-style:normal;
+  word-break:keep-all;
+  scroll-behavior: smooth;
+}
+
+html, body, section{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+
+
+.choose{
+    position:fixed;
+
+    top:20px;
+    left:640px;
+
+    transform:translateX(-50%);
+
+    margin:0;
+    color:white;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+}
+
+
+#rewindBtn{
+    text-decoration:none;
+    color:white;
+    opacity:.5;
+    transition:.3s;
+}
+
+#rewindBtn:hover{
+    opacity:1;
+}
+
+#rewindNav{
+    position:fixed;
+    top:20px;
+    left:20px;
+    z-index:9999;
+}
+
+
+#blackout{
+    position:fixed;
+    inset:0;
+
+    background:black;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:.5s;
+
+    z-index:9998;
+}
+
+#blackout.active{
+    opacity:1;
+}
+
+
+
+.tv-container{
+    position:relative;
+
+    width:1280px;
+    height:720px;
+
+    margin:auto;
+}
+
+.tv-bg{
+    width:1280px;
+    
+    display:block;
+}
+
+.about{
+    position:absolute;
+
+    left:20px;
+    top:224px;
+
+    width:272px;
+    height:194px;
+
+    overflow:hidden;
+}
+
+.horror{
+    position:absolute;
+
+    left:526px;
+    top:224px;
+
+    width:272px;
+    height:194px;
+
+    overflow:hidden;
+}
+
+
+
+.war{
+    position:absolute;
+
+    left:157px;
+    top:292px;
+
+    width:216px;
+    height:162px;
+
+    overflow:hidden;
+}
+
+.zombie{
+    position:absolute;
+
+    left:900px;
+    top:247px;
+
+    width:227px;
+    height:177px;
+
+    overflow:hidden;
+}
+
+.hero{
+    position:absolute;
+
+    left:502px;
+    top:59px;
+
+    width:149px;
+    height:116px;
+
+    overflow:hidden;
+}
+
+.kteen{
+    position:absolute;
+
+    left:315px;
+    top:526px;
+
+    width:216px;
+    height:158px;
+
+    overflow:hidden;
+}
+
+.crime{
+    position:absolute;
+
+    left:664px;
+    top:491px;
+
+    width:266px;
+    height:192px;
+
+    overflow:hidden;
+}
+
+.eye{ position:absolute;
+
+    left:240px;
+    top:147px;
+
+    width:131px;
+    height:91px;
+
+    overflow:hidden;
+
+}
+
+video{
+    width: 100%;
+    height: 100%;
+}
+
+
+
+body{
+    background:#01081A;
+}
+
+
+/* 모든 TV화면 공통 효과 */
+
+.tv-screen{
+
+    position:absolute;
+
+    overflow:hidden;
+
+    cursor:pointer;
+
+    transition:.2s;
+    border-radius: 4px;
+}
+
+/* 영상 */
+
+.tv-screen video{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    transition:.2s;
+}
+
+/* Hover 시 TV 오류 */
+
+.tv-screen:hover{
+
+    
+}
+
+/* 영상 확대 */
+
+.tv-screen:hover video{
+
+    transform:scale(1.05);
+
+    filter:
+        contrast(1.2)
+        brightness(1.1);
+}
+
+/* 노이즈 레이어 */
+
+.glitch-noise{
+
+    position:absolute;
+    inset:0;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    background-image:url("gifs/glitch.gif");
+
+    background-size:cover;
+
+    mix-blend-mode:screen;
+}
+
+/* Hover 시 노이즈 등장 */
+
+.tv-screen:hover .glitch-noise{
+
+    opacity:1;
+
+   
+}
+
+/* 흔들림 */
+
+@keyframes flicker{
+
+    0%{
+        opacity:.2;
+    }
+
+    50%{
+        opacity:.8;
+    }
+
+    100%{
+        opacity:.2;
+    }
+}
+
+
+
+.scanline{
+
+    position:absolute;
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+
+    repeating-linear-gradient(
+
+        to bottom,
+
+        rgba(180,220,255,.20) 0px,
+        rgba(180,220,255,.20) 1px,
+
+        rgba(120,180,255,.10) 1px,
+        rgba(120,180,255,.10) 3px
+
+    );
+
+    mix-blend-mode:screen;
+
+    opacity:.9;
+
+    z-index:20;
+}
+</style>
+
+
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+
+
+	
+
+
+
+
+
+<body>
+<section>
+<div id="blackout"></div>
+
+<nav id="rewindNav">
+    <a href="index.html" id="rewindBtn">|◀◀ REWIND</a>
+        <h3 class="choose">Choose your genre.</h3>
+</nav>
+
+
+<div class="black tv-container">
+
+    <img src="tv.jpeg" class="tv-bg">
+
+
+    <a href="pages/cctv.html?genre=horror" class="horror tv-screen">
+        <video autoplay muted loop playsinline>
+            <source src="videos/horror.mp4">
+        </video>
+        <div class="scanline"></div>
+    <div class="glitch-noise"></div>
+    </a>
+
+    <a href="pages/cctv.html?genre=war" class="war tv-screen">
+        <video autoplay muted loop playsinline>
+            <source src="videos/war.mp4">
+        </video>
+        <div class="scanline"></div>
+    <div class="glitch-noise"></div>
+    </a>
+
+       <a href="pages/cctv.html?genre=zombie" class="zombie tv-screen">
+        <video autoplay muted loop playsinline>
+            <source src="videos/zombie.mp4">
+        </video>
+        <div class="scanline"></div>
+    <div class="glitch-noise"></div>
+    </a>
+
+
+       <a href="pages/cctv.html?genre=hero" class="hero tv-screen">
+        <video autoplay muted loop playsinline>
+            <source src="videos/hero.mp4">
+        </video>
+        <div class="scanline"></div>
+    <div class="glitch-noise"></div>
+    </a>
+
+    <a href="pages/cctv.html?genre=kteen" class="kteen tv-screen">
+        <video autoplay muted loop playsinline>
+            <source src="videos/kteen.mp4">
+        </video>
+        <div class="scanline"></div>
+    <div class="glitch-noise"></div>
+    </a>
+
+    <a href="pages/cctv.html?genre=crime" class="crime tv-screen">
+        <video autoplay muted loop playsinline>
+            <source src="videos/crime.mp4">
+        </video>
+        <div class="scanline"></div>
+    <div class="glitch-noise"></div>
+    </a>
+
+     <a href="pages/about.html" class="eye tv-screen">
+        <video autoplay muted loop playsinline>
+            <source src="videos/eye.mp4">
+        </video>
+        <div class="scanline"></div>
+    <div class="glitch-noise"></div>
+    </a>
+
+    
+
+</div>
+
+</section>
+
+
+<script>
+const rewindBtn = document.getElementById("rewindBtn");
+const blackout = document.getElementById("blackout");
+
+rewindBtn.addEventListener("click",(e)=>{
+
+    e.preventDefault();
+
+    blackout.classList.add("active");
+
+    setTimeout(()=>{
+        window.location.href = "index.html";
+    },500);
+
+});
+
+</script>
+
+</body>
+
+	
+
+
+
+
+
+
+</html>
+
